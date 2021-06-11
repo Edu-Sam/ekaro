@@ -1,0 +1,319 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model UserType {
+  id Int @id @default(autoincrement())
+  name String @unique
+  description String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user User[]
+  role Role[]
+
+ @@map(name: "userTypes")
+ 
+}
+
+model Role {
+  id Int @id @default(autoincrement())
+  name String @unique
+  description String?
+  userType UserType @relation(fields: [userTypeID], references: [id])
+  userTypeID Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user User[]
+
+ @@map(name: "roles")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  fullName String
+  email String @unique
+  phone String
+  password String
+  school School? @relation(fields: [schoolID], references: [id])
+  schoolID Int?
+  designation String?
+  userType UserType @relation(fields: [userTypeID], references: [id])
+  userTypeID Int
+  role Role @relation(fields: [roleID], references: [id])
+  roleID Int
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Payment Payment[]
+
+  @@map(name: "users")
+
+}
+
+model SchoolType {
+  id Int @id @default(autoincrement())
+  typeName String @unique
+  description String?
+  school School[]
+  classes ClassType[]
+  createdAt DateTime @default(now())
+
+  @@map(name: "schooltypes")
+}
+
+model SchoolOwnership {
+  id Int @id @default(autoincrement())
+  typeName String @unique
+  description String?
+  school School[]
+  createdAt DateTime @default(now())
+
+  @@map(name: "schoolownerships")
+}
+
+model County {
+  id Int @id @default(autoincrement())
+  countyCode String
+  countyName String @unique
+  school School[]
+  createdAt DateTime @default(now())
+
+  @@map(name: "counties")
+}
+
+model ContractType {
+  id Int @id @default(autoincrement())
+  typeName String @unique
+  description String?
+  school School[]
+  createdAt DateTime @default(now())
+  @@map(name: "contractTypes")
+
+}
+
+model School {
+  id Int @id @default(autoincrement())
+  name String
+  schoolCode String @unique
+  type SchoolType @relation(fields: [schoolTypeID], references: [id])
+  schoolTypeID Int
+  ownership SchoolOwnership @relation(fields: [ownershipID], references: [id])
+  ownershipID Int
+  county County @relation(fields: [countyID], references: [id])
+  countyID Int
+  contractType ContractType @relation(fields: [contractTypeID], references: [id])
+  contractTypeID Int
+  contractValue Decimal
+  schoolDetails SchoolDetail?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  student Student[]
+  charge Charge[]
+  payments Payment[]
+  users User[]
+  stkTransaction STKTransaction[]
+  mpesaDetails schoolMpesaDetails[]
+  
+  @@map(name: "schools")
+
+}
+
+model SchoolDetail {
+  id Int @id @default(autoincrement()) 
+  school School @relation(fields: [schoolID], references: [id])
+  schoolID Int
+  postalAddress String?
+  physicalAddress String
+  county String
+  subCounty String
+  mpesaPaybill Int
+  bank String
+  branch String
+  contactPersonRole String
+  contactPersonName String
+  contactPersonPhone String
+  contactPersonEmail String?
+  bankAccount String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map(name: "schoolDetails")
+}
+
+model ClassType {
+  id Int @id @default(autoincrement())
+  classNumber Int
+  name String
+  student Student[]
+  schoolType SchoolType @relation(fields: [schoolTypeID], references: [id])
+  schoolTypeID Int
+  charge Charge[]
+  @@map(name: "classTypes")
+
+}
+
+model Student {
+  id Int @id @default(autoincrement())
+  studentID String 
+	fullName String
+  school School @relation(fields: [schoolID], references: [id])
+  schoolID Int
+	studentClass ClassType @relation(fields: [studentClassID], references: [id])
+  studentClassID Int
+	feeBalance Decimal
+  guardianName String
+	guardianPhone String
+  payments Payment[]
+  studentLedger StudentLedger[]
+  charge Charge[]
+  @@map(name: "students")
+}
+
+model Charge {
+  id Int @id @default(autoincrement())
+  chargeName String
+  amount Decimal
+  description String
+  appliesTo ChargeAppliesTo @relation(fields: [appliesToID], references: [id])
+  appliesToID Int
+  school School @relation(fields: [schoolID], references: [id])
+  schoolID Int
+  className ClassType? @relation(fields: [classID], references: [id])
+  classID Int?
+  student Student? @relation(fields: [studentID], references: [id])
+  studentID Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  studentLedger StudentLedger[]
+  @@map(name: "charges")
+
+}
+
+model ChargeAppliesTo {
+  id Int @id @default(autoincrement())
+  groupName String
+  charge Charge?
+
+}
+enum transactionType {
+  CHARGE
+  PAYMENT
+}
+
+model StudentLedger {
+  id Int @id @default(autoincrement())
+  student Student @relation(fields: [studentID], references: [id])
+  studentID Int
+  transactionType transactionType
+  amount Decimal
+  charge Charge? @relation(fields: [chargeID], references: [id])
+  chargeID Int?
+  payment Payment? @relation(fields: [paymentID], references: [id])
+  paymentID Int?
+  transactionDescription String? //payment ref or chargeName
+  runningBalance Decimal
+  createdAt DateTime @default(now())
+  transationDate DateTime
+
+}
+model PaymentMethod { //e.g. Mpesa, Cash, Bank deposit
+  id Int @id @default(autoincrement())
+  name String @unique
+  description String?
+  payment Payment[]
+
+  @@map(name: "paymentMethods")
+}
+
+model Payment {
+  id Int @id @default(autoincrement())
+  student Student @relation(fields: [studentID], references: [id])
+  studentID Int
+  school School @relation(fields: [schoolID], references: [id])
+  schoolID Int
+  paymentMethod PaymentMethod @relation(fields: [paymentMethodID], references: [id])
+  paymentMethodID Int
+  paymentRef String @unique
+  description String?
+  amount Decimal
+  createdAt DateTime @default(now())
+  transactionDate DateTime
+  servedBy User? @relation(fields: [servedByID], references: [id])
+  servedByID Int?
+  receiptNo String
+  studentLedger StudentLedger[]
+
+  @@map(name: "payments")
+}
+
+model STKTransaction {
+  id Int @id @default(autoincrement())
+  phoneNumber String
+  amount Decimal
+  accountReference String
+  transactionDesc String
+  studentRegNo String
+  school School @relation(fields: [schoolID], references: [id])
+  schoolID Int
+  BusinessShortCode String
+  MerchantRequestID String
+  CheckoutRequestID String @unique
+  initResponseCode String
+  ResponseDescription String
+  cbResultCode Int?
+  cbResultDesc String?
+  MpesaReceiptNumber String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cbMetaData Json?
+  processedStatus Boolean @default(false)
+  processedTime DateTime?
+  processingResponse String?
+  @@map(name: "stkTransactions")
+}
+
+model RawMpesaData {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  TransID String @unique
+  BusinessShortCode String
+  TransactionType String
+  TransTime String
+  MSISDN String
+  TransAmount Decimal
+  OrgAccountBalance Decimal?
+  payeeNames String?
+  BillRefNumber String?
+  processedStatus Boolean @default(false)
+  processedTime DateTime?
+  processingResponse String?
+
+}
+
+model schoolMpesaDetails {
+  id Int @id @default(autoincrement())
+  school School @relation(fields: [schoolID], references: [id])
+  schoolID Int
+  businessShortcode Int
+  consumerKey String
+  consumerSecret String
+  stkPassKey String?
+
+}
+
+model Guardian {
+  id Int @id @default(autoincrement())
+  fullName String
+  phone String @unique
+  email String?
+
+  @@map(name: "guardians")
+}

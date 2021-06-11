@@ -1,0 +1,35 @@
+    <div class="row">
+          <!-- left column -->
+          <div class="col-md-8">
+    <div class="card card-info">
+        <div class="card-header">
+        <h3 class="card-title">Edit Contract Type</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form role="form" action="/contractTypes/edit/{{contractType.id}}" method="POST">
+        <div class="card-body">
+            <div class="form-group">
+            <label for="name">Contract Type</label>
+            <input type="text" class="form-control" id="typeName"  name="typeName" value="{{contractType.typeName}}">
+            </div>
+            <div class="form-group">
+            <label for="name">Description</label>
+            <textarea class="form-control" id="description"  name="description">{{contractType.description}}</textarea>
+            </div>
+                                  
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Edit Contract Type</button>
+        </div>
+        </form>
+    </div>
+</div>
+<!-- End Form -->
+
+<div class="col-md-4">
+    </div>
+    </div>
+

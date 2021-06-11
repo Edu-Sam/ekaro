@@ -1,0 +1,43 @@
+    <div class="row">
+          <!-- left column -->
+          <div class="col-md-8">
+    <div class="card card-info">
+        <div class="card-header">
+        <h3 class="card-title">Edit Class</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form role="form" action="/classTypes/edit/{{classType.id}}" method="POST">
+        <div class="card-body">
+            
+            <div class="form-group">
+            <label for="name">Class Number</label>
+            <input type="text" class="form-control" id="classNumber"  name="classNumber" value="{{classType.classNumber}}">
+            </div>
+            <div class="form-group">
+            <label for="name">Class Name</label>
+            <input type="text" class="form-control" id="name"  name="name" value="{{classType.name}}">
+            </div>
+            <div class="form-group">
+            <label for="name">School Type</label>
+            <input type="text" class="form-control" id="schoolTypeID"  name="schoolTypeID" value="{{classType.schoolTypeID}}">
+            </div>
+            
+          
+           
+                                  
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Update Class</button>
+        </div>
+        </form>
+    </div>
+</div>
+<!-- End Form -->
+
+<div class="col-md-4">
+    </div>
+    </div>
+

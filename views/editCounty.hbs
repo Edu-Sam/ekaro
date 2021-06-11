@@ -1,0 +1,35 @@
+    <div class="row">
+          <!-- left column -->
+          <div class="col-md-8">
+    <div class="card card-info">
+        <div class="card-header">
+        <h3 class="card-title">Edit County</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form role="form" action="/counties/edit/{{county.id}}" method="POST">
+        <div class="card-body">
+            <div class="form-group">
+            <label for="name">County Code</label>
+            <input type="text" class="form-control" id="countyCode"  name="countyCode" value="{{county.countyCode}}">
+            </div>
+            <div class="form-group">
+            <label for="name">County Name</label>
+            <input type="text" class="form-control" id="countyName"  name="countyName" value="{{county.countyName}}">
+            </div>
+                                  
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Edit County</button>
+        </div>
+        </form>
+    </div>
+</div>
+<!-- End Form -->
+
+<div class="col-md-4">
+    </div>
+    </div>
+
