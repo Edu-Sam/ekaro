@@ -11,13 +11,16 @@ app.get('/', auth.checkNotAuthenticated, (req, res) => {
     res.render('schoolLogin', { title: 'eKaro', layout:'nolayout' });
   });
 
-  app.post('/', auth.checkNotAuthenticated, passport.authenticate('local', {
+/*  app.post('/', auth.checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/school/dashboard',
     failureRedirect: '/school/login',
     failureFlash: true
-  }))
-  
-  
+  }))*/
+  app.post('/',(req,res)=>{
+    res.render('schoolDashboard')
+  })
+
+
   app.get('/logout', (req,res)=>{
       req.logOut()
       res.redirect('/school/dashboard')
