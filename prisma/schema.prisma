@@ -20,7 +20,7 @@ model UserType {
   role Role[]
 
  @@map(name: "userTypes")
- 
+
 }
 
 model Role {
@@ -121,13 +121,13 @@ model School {
   users User[]
   stkTransaction STKTransaction[]
   mpesaDetails schoolMpesaDetails[]
-  
+
   @@map(name: "schools")
 
 }
 
 model SchoolDetail {
-  id Int @id @default(autoincrement()) 
+  id Int @id @default(autoincrement())
   school School @relation(fields: [schoolID], references: [id])
   schoolID Int
   postalAddress String?
@@ -162,7 +162,7 @@ model ClassType {
 
 model Student {
   id Int @id @default(autoincrement())
-  studentID String 
+  studentID String
 	fullName String
   school School @relation(fields: [schoolID], references: [id])
   schoolID Int
@@ -201,8 +201,10 @@ model ChargeAppliesTo {
   id Int @id @default(autoincrement())
   groupName String
   charge Charge?
-
+  @@map(name: "applyCharge")
 }
+
+
 enum transactionType {
   CHARGE
   PAYMENT

@@ -31,6 +31,8 @@ var AdminUsersRouter = require('./routes/adminUsers')
 var classTypesRouter = require('./routes/classTypes')
 var studentsRouter = require('./routes/students')
 var newStudentsRouter=require('./routes/newStudents')
+var chargesRouter=require('./routes/charges')
+var applyChargeRouter=require('./routes/applyCharge')
 var paymentsRouter = require('./routes/payments')
 
 
@@ -77,9 +79,12 @@ app.use('/schoolUsers', passportAuth.checkAuthenticated, schoolUsersRouter);
 app.use('/adminUsers', passportAuth.checkAuthenticated, AdminUsersRouter);
 app.use('/classTypes', passportAuth.checkAuthenticated, classTypesRouter);
 app.use('/students', studentsRouter);
-app.use('./addStudent',newStudentsRouter);
+app.use('/addStudent',newStudentsRouter);
+app.use('/charges',chargesRouter);
+app.use('/applyCharge',applyChargeRouter);
 //app.use('/students', passportAuth.checkAuthenticated, studentsRouter);
-app.use('/payments', passportAuth.checkAuthenticated, paymentsRouter)
+//app.use('/payments', passportAuth.checkAuthenticated, paymentsRouter)
+app.use('/payments', paymentsRouter)
 
 app.use('/api', api)
 
