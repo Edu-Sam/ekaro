@@ -7,7 +7,7 @@
 
            <!-- Modal Header -->
            <div class="modal-header">
-             <h4 class="modal-title">Create Charge</h4>
+             <h4 class="modal-title">Add Payment</h4>
              <button type="button" class="close" data-dismiss="modal">&times;</button>
 
            </div>
@@ -17,11 +17,11 @@
              <div class="col-md-12">
              <div class="card card-info">
              <div class="card-header">
-             <h3 class="card-title">Enter Charge Group</h3>
+             <h3 class="card-title">Enter Payment</h3>
              </div>
              <!-- /.card-header -->
              <!-- form start -->
-             <form role="form" action="/charges" method="POST">
+             <form role="form" id="form1" action="/payments/validate" method="POST">
              <div class="card-body">
 
                            <div class="form-group">
@@ -84,8 +84,8 @@
         <!-- form start -->
         <form role="form" id="form1" action="/payments/validate" method="POST">
         <div class="card-body">
-          <div class="p-2">
-           <button type="button" class="btn btn-success btn-sm p-2 float-left" data-toggle="modal" data-target="#myModal">Add Student</button>
+          <div class="m-2">
+           <button type="button" class="btn btn-success btn-sm p-2 float-left" data-toggle="modal" data-target="#myModal">Add Payment</button>
           </div>
 
           <table id="c-data" class="table table-bordered table-hover">
@@ -132,7 +132,7 @@
         <div class="card-footer">
             <button type="submit" class="btn btn-primary float-right"> Submit</button>
         </div>
-        </form>
+      <!--  </form>-->
     </div>
 
 </div>

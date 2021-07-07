@@ -17,11 +17,11 @@ app.get('/', async (req, res) => {
 
 
         res.render('school', { title: 'Schools', schools,schooltypes, schoolOwnerships,contractTypes,counties })
-        
+
     } catch (error) {
         res.status(400).send(error)
     }
-  
+
 })
 
 app.get('/:id', async (req, res) => {
@@ -34,11 +34,11 @@ app.get('/:id', async (req, res) => {
             }
         })
         res.json(school)
-        
+
     } catch (error) {
         res.status(400).send(error.message)
     }
-    
+
   })
 
 app.post('/', async (req, res) => {
@@ -47,7 +47,7 @@ app.post('/', async (req, res) => {
 
         const school = await prisma.school.create({
             data: {
-                name, 
+                name,
                 schoolCode,
                 type: {
                     connect: {id: parseInt(typeID)},
@@ -61,9 +61,9 @@ app.post('/', async (req, res) => {
                 contractType: {
                     connect: {id: parseInt(contractTypeID)},
                   },
-                contractValue,                
+                contractValue,
                 schoolDetails: {
-                    create: { 
+                    create: {
                         postalAddress,
                         physicalAddress,
                         county,
@@ -75,19 +75,19 @@ app.post('/', async (req, res) => {
                         contactPersonName,
                         contactPersonPhone,
                         contactPersonEmail,
-                        bankAccount 
+                        bankAccount
                     }
                 },
             }
         })
         res.redirect('/schools')
 
-        
+
     } catch (error) {
         console.log(error)
         res.status(500).send(error.meta)
     }
-    
+
 })
 
 
@@ -99,7 +99,7 @@ app.put('/:id', async (req, res) => {
         const school = await prisma.school.update({
             where: {id},
             data: {
-                name, 
+                name,
                 schoolCode,
                 type: {
                     connect: {id: typeID},
@@ -113,9 +113,9 @@ app.put('/:id', async (req, res) => {
                 contractType: {
                     connect: {id: contractTypeID},
                   },
-                contractValue,                
+                contractValue,
                 schoolDetails: {
-                    create: { 
+                    create: {
                         postalAddress,
                         physicalAddress,
                         county,
@@ -127,17 +127,17 @@ app.put('/:id', async (req, res) => {
                         contactPersonName,
                         contactPersonPhone,
                         contactPersonEmail,
-                        bankAccount 
+                        bankAccount
                     }
                 },
             }
         })
         res.json(school)
-        
+
     } catch (error) {
         res.status(500).send(error.message)
     }
-  
+
 })
 
 app.delete('/:id', async (req, res) => {
@@ -149,11 +149,11 @@ app.delete('/:id', async (req, res) => {
         },
       })
       res.json(school)
-      
+
   } catch (error) {
       res.send(error)
   }
-  
+
 })
 
 module.exports = app;

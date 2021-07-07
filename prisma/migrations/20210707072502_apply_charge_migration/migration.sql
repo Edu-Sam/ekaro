@@ -51,7 +51,7 @@ DROP TABLE `appliedcharges`;
 DROP TABLE `chargeappliesto`;
 
 -- CreateTable
-CREATE TABLE `applyCharge` (
+CREATE TABLE `applycharge` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `groupName` VARCHAR(191) NOT NULL,
 
@@ -69,7 +69,7 @@ UNIQUE INDEX `paymentMethods.name_unique`(`name`),
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `charges` ADD FOREIGN KEY (`appliesToID`) REFERENCES `applyCharge`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `charges` ADD FOREIGN KEY (`appliesToID`) REFERENCES `applycharge`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `charges` ADD FOREIGN KEY (`classID`) REFERENCES `classTypes`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

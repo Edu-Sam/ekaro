@@ -201,7 +201,7 @@ model ChargeAppliesTo {
   id Int @id @default(autoincrement())
   groupName String
   charge Charge?
-  @@map(name: "applyCharge")
+  @@map(name: "applycharge")
 }
 
 

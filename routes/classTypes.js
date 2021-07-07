@@ -24,7 +24,7 @@ app.post('/', async (req, res) => {
         console.log(error)
         res.status(500).send(error.meta)
     }
-    
+
 })
 
 app.get('/edit/:id',async(req, res, next)=>{
@@ -34,7 +34,7 @@ app.get('/edit/:id',async(req, res, next)=>{
             where:{id}
         })
         res.render('editClassType', {title: 'classTypes', classType})
-        
+
     } catch (error) {
         res.status(400).send(error.message)
     }
@@ -49,11 +49,11 @@ app.post('/edit/:id', async (req, res) => {
             data: { classNumber: parseInt(classNumber), name, schoolTypeID: parseInt(schoolTypeID) },
         })
         res.redirect('/classTypes')
-        
+
     } catch (error) {
         res.status(500).send(error.message)
     }
-  
+
 })
 
 app.get('/delete/:id', async (req, res) => {
@@ -65,11 +65,11 @@ app.get('/delete/:id', async (req, res) => {
         },
       })
       res.redirect('/classTypes')
-      
+
   } catch (error) {
       res.send(error)
   }
-  
+
 })
 
 module.exports = app;

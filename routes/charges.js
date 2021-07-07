@@ -6,25 +6,27 @@ const app = express()
 
 app.get('/',async (req,res) => {
   const charges = await prisma.charge.findMany()
+  const appliedCharges=await prisma.chargeAppliesTo.findMany()
+  const classType=await prisma.classType.findMany()
 //  const schoolTypes = await prisma..findMany()
   try{
-    res.render('charges',{layout: 'schoolLayout',title:'Create Charge',charges})
+    res.render('charges',{layout: 'schoolLayout',title:'Charges Catalogue',charges,appliedCharges,classType})
   }
   catch(error){
     res.status(400).send(error)
   }
 })
 
-app.post('/',async (req,res) => {
+app.post('/addcharge',async (req,res) => {
   try{
-    const {group_name}=req.body
-    const classType = await prisma.applyCharge.create({
-        data: {
-            groupName: group_name
+    const {groupName}=req.body
+    const applycharge = await prisma.chargeAppliesTo.create({
+        data:{
+            groupName: groupName
         }
     })
 
-    res.redirect('./charges')
+    res.redirect('/charges')
   }
 
   catch (error) {
